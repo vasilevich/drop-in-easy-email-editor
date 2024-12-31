@@ -1,0 +1,42 @@
+{
+  "name": "drop-in-easy-email-editor",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@arco-themes/react-easy-email-theme": "^0.0.3",
+    "cra-template": "1.2.0",
+    "easy-email-core": "^4.16.1",
+    "easy-email-editor": "^4.16.1",
+    "easy-email-extensions": "^4.16.1",
+    "mjml-browser": "^4.15.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-final-form": "^6.5.9",
+    "react-modal": "^3.16.3",
+    "react-scripts": "5.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
