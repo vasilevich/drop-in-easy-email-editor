@@ -40,7 +40,13 @@ const EmailPreview = ({onClick, html, subject, subTitle}) => {
                 </span>}
             </div>
             <label>Email Content</label>
-            <div style={{border: 1, borderStyle: 'solid', minHeight: 400}} dangerouslySetInnerHTML={{__html: html}}/>
+            <div style={{
+                border: 1,
+                borderStyle: 'solid',
+                minHeight: 400,
+                pointerEvents: 'none'
+            }}
+                 dangerouslySetInnerHTML={{__html: html}}/>
         </div>
     );
 };
