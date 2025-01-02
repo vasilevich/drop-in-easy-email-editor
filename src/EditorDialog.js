@@ -7,7 +7,8 @@ const style = {
     height: "100%",
     padding: 0,
     margin: 0,
-    inset: 0
+    inset: 0,
+    zIndex: 99999999
 };
 const buttonStyle = {
     position: 'absolute',
@@ -19,8 +20,8 @@ const buttonStyle = {
     cursor: 'pointer',
     zIndex: 9999
 };
-export default (props) => {
-    const [open, setOpen] = React.useState(false);
+const EditorDialog = (props) => {
+    const [open, setOpen] = React.useState(props.open || false);
     useEffect(() => {
         // Expose a global object for communication
         props.editorCommunication.openModal = () => {
@@ -39,6 +40,9 @@ export default (props) => {
         };
 
     }, []);
+    useEffect(() => {
+        setOpen(props.open);
+    }, [props.open]);
     const handleCloseModal = () => {
         setOpen(false);
         if (typeof props.onClose === 'function') {
@@ -53,6 +57,7 @@ export default (props) => {
                 content: style,
                 overlay: style
             }}
+            ariaHideApp={false}
         >
             <button
                 onClick={handleCloseModal}
@@ -66,3 +71,4 @@ export default (props) => {
     );
 }
 
+export default EditorDialog;

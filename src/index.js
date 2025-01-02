@@ -2,20 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import EditorDialog from './EditorDialog';
 import Editor from "./Editor";
+import EditorPreviewWithDialog from "./EditorPreviewWithDialog";
 
 /**
  * Expose a global object to allow communication with the editor and to attach the editor to the DOM
- * @type {{init: Window.emailEditor.init}}
+ * @type {{init: (function({id?: *, onChange?: *, data?: *}): *)}}
  */
 window.emailEditor = {
     init: (props = {}) => {
-        let {id, onChange} = props;
+        const {id, onChange, data, inline} = props;
         let idWasGenerated = false;
         // if id is not set, generate a random id and a div element and push it inside body
-        if (!id) {
-            id = `email-editor-${Date.now()}`;
+        let generatedId;
+        if (!inline && !id) {
+            generatedId = `email-editor-${Date.now()}`;
             const div = document.createElement('div');
-            div.id = id;
+            div.id = generatedId;
             // set display to none
             div.style.display = 'none';
             document.body.appendChild(div);
@@ -23,7 +25,8 @@ window.emailEditor = {
         }
 
         const editorCommunication = {
-            onChange: onChange
+            onChange: onChange,
+            data: data,
         };
 
         const modalInitializedPromise = new Promise((resolve) => {
@@ -52,16 +55,25 @@ window.emailEditor = {
         editorCommunication.initializedPromise = Promise
             .all([modalInitializedPromise, editorInitializedPromise])
             .then(() => editorCommunication);
-        if (idWasGenerated) {
-            ReactDOM.render(
-                <EditorDialog {...props} editorCommunication={editorCommunication}/>
-                , document.getElementById(id));
+        if (!inline) {
+            if (idWasGenerated === false) {
+                ReactDOM.render(
+                    <EditorPreviewWithDialog editorCommunication={editorCommunication}/>
+                    , document.getElementById(id));
+            } else {
+                ReactDOM.render(
+                    <EditorDialog {...props} editorCommunication={editorCommunication}/>
+                    , document.getElementById(generatedId));
+            }
+
 
         } else {
             ReactDOM.render(
                 <Editor {...props} editorCommunication={editorCommunication}/>
                 , document.getElementById(id));
         }
+
+
         return editorCommunication;
     }
 };

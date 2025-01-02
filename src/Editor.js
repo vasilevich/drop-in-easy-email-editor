@@ -21,18 +21,37 @@ const initialValues = {
  * @param values
  * @param html
  */
-const onChange = ({values, html}, editorCommunication) => {
-    if (editorCommunication && typeof editorCommunication.onChange === 'function') {
+const onChange = ({values, html}, {editorCommunication, onChange}) => {
+    if (editorCommunication) {
         if (editorCommunication.data && editorCommunication.data.html === html) {
             return;
         }
         editorCommunication.data = {values: values, html: html};
-        editorCommunication.onChange(editorCommunication.data);
+        if (typeof editorCommunication.onChange === 'function') {
+            editorCommunication.onChange(editorCommunication.data);
+        }
+        if (typeof onChange === 'function') {
+            onChange(editorCommunication.data);
+        }
     }
 }
 
-export default (props) => {
-    const [data, setData] = useState({...initialValues, ...(props.initialValues || {})});
+const parseInitialDataState = props => {
+    let data = {...initialValues};
+
+    if (props.editorCommunication.data && props.editorCommunication.data.values) {
+        data = {...data, ...props.editorCommunication.data.values};
+    }
+
+    if (props.initialValues) {
+        data = {...data, ...props.initialValues};
+    }
+    return data;
+}
+
+const Editor = (props) => {
+    const [data, setData] = useState(parseInitialDataState(props));
+    console.log(52352325, data);
     useEffect(() => {
         // Expose a global object for communication
         props.editorCommunication.setData = (data) => {
@@ -42,14 +61,9 @@ export default (props) => {
                 setData(data);
             }
         };
-        props.editorCommunication.onChange = ({values, html}) => {
-            console.log("window.emailEditor.onChange not implemented, values recieved", values, html);
-        };
         // cleanup
         return () => {
             props.editorCommunication.setContent = () => {
-            };
-            props.editorCommunication.onChange = () => {
             };
         };
 
@@ -63,10 +77,10 @@ export default (props) => {
             dashed={false}
         >
             {({values}) => {
-                onChange({values, html: objToEmailValidHtml(values)}, props.editorCommunication);
+                onChange({values, html: objToEmailValidHtml(values)}, props);
                 return (
                     <StandardLayout
-                        showSourceCode={true}
+                        showSourceCode={false}
                     >
                         <EmailEditor/>
                     </StandardLayout>
@@ -76,3 +90,4 @@ export default (props) => {
     );
 }
 
+export default Editor;
