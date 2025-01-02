@@ -15,7 +15,6 @@ const EditorPreviewWithDialog = (props) => {
         }
         setData(data);
     }, [props.onChange, setData]);
-    console.log(1111, data.values.subject, data.values.subTitle);
     return (
         <>
             <EmailPreview html={data.html}

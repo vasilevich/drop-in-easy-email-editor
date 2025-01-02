@@ -51,7 +51,6 @@ const parseInitialDataState = props => {
 
 const Editor = (props) => {
     const [data, setData] = useState(parseInitialDataState(props));
-    console.log(52352325, data);
     useEffect(() => {
         // Expose a global object for communication
         props.editorCommunication.setData = (data) => {
