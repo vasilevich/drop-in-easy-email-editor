@@ -28,16 +28,57 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="emailContainer" class="email-editor-container editor">
+      <div class="email-editor-show"></div>
+      <input class="email-editor email-editor-field" type="hidden" name="completed_email_editor"
+             value="">
+      <input class="email-editor email-editor-html-field" type="hidden" name="completed_email_html"
+             value="">
+    </div>
+    <script type="module">
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+      const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      const waitUntilVariableExists = async (variableName, timeout = 5000) => {
+        const startTime = Date.now();
+        while (true) {
+          if (window[variableName]) {
+            return window[variableName];
+          }
+          if (Date.now() - startTime > timeout) {
+            throw new Error(`Variable ${variableName} not found within ${timeout}ms`);
+          }
+          await sleep(100);
+        }
+      };
+
+      await waitUntilVariableExists('emailEditor');
+
+
+      const container = document.getElementById("emailContainer");
+      const hiddenJsonField = container.querySelector('.email-editor-field');
+      const hiddenHtmlField = container.querySelector('.email-editor-html-field');
+      const editorContainer = container.querySelector('.email-editor-show');
+      const randomId = 'editor-container-' + Math.random().toString(36).substring(2, 15);
+      editorContainer.id = randomId;
+
+      emailEditor.init({
+        id: randomId,
+        data: {
+          values: hiddenJsonField.value && JSON.parse(hiddenJsonField.value),
+          html: hiddenHtmlField.value,
+        },
+        onChange: function (data) {
+          console.log("Email editor data changed:", data);
+          try {
+            hiddenJsonField.value = JSON.stringify(data.values);
+            hiddenHtmlField.value = data.html;
+          } catch (e) {
+            console.error("Failed to save email editor data:", e);
+          }
+        }
+      });
+
+    </script>
   </body>
 </html>

@@ -24,7 +24,8 @@ const EditorPreviewWithDialog = (props) => {
             />
             <EditorDialog {...props}
                           open={open}
-                          onClose={() => setOpen(false)} onChange={onChangeHandler}
+                          onClose={() => setOpen(false)}
+                          onChange={onChangeHandler}
                           initialValues={data.values}
             />
         </>

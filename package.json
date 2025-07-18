@@ -5,9 +5,9 @@
   "dependencies": {
     "@arco-themes/react-easy-email-theme": "^0.0.3",
     "cra-template": "1.2.0",
-    "easy-email-core": "^4.16.1",
-    "easy-email-editor": "^4.16.1",
-    "easy-email-extensions": "^4.16.1",
+    "easy-email-core": "^4.16.4",
+    "easy-email-editor": "^4.16.3",
+    "easy-email-extensions": "^4.16.4",
     "mjml-browser": "^4.15.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",

@@ -22,8 +22,15 @@ const initialValues = {
  * @param html
  */
 const onChange = ({values, html}, {editorCommunication, onChange}) => {
+    const subject = values.subject || initialValues.subject;
+    const subTitle = values.subTitle || initialValues.subTitle;
     if (editorCommunication) {
-        if (editorCommunication.data && editorCommunication.data.html === html) {
+        if (editorCommunication.data &&
+            editorCommunication.data.html === html &&
+            editorCommunication.data.values &&
+            editorCommunication.data.values.subject === subject &&
+            editorCommunication.data.values.subTitle === subTitle
+        ) {
             return;
         }
         editorCommunication.data = {values: values, html: html};
