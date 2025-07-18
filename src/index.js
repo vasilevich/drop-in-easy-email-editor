@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import EditorDialog from './EditorDialog';
 import Editor from "./Editor";
 import EditorPreviewWithDialog from "./EditorPreviewWithDialog";
-
+import './assets/style.css';
 /**
  * Expose a global object to allow communication with the editor and to attach the editor to the DOM
  * @type {{init: (function({id?: *, onChange?: *, data?: *}): *)}}
