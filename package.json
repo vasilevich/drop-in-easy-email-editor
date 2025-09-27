@@ -8,6 +8,7 @@
     "easy-email-core": "^4.16.4",
     "easy-email-editor": "^4.16.3",
     "easy-email-extensions": "^4.16.4",
+    "final-form": "^5.0.0",
     "mjml-browser": "^4.15.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -38,5 +39,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "7",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-jsx-a11y": "6",
+    "eslint-plugin-react": "7",
+    "eslint-plugin-react-hooks": "4"
   }
 }
